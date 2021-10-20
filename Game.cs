@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace MineSweeper
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
-        public Form1()
+        public Game()
         {
             InitializeComponent();
+        }
+
+        private void 초급ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ;
+        }
+
+        private void 끝내기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
