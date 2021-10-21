@@ -39,6 +39,7 @@ namespace MineSweeper
             this.Label_Bomb = new System.Windows.Forms.Label();
             this.PictureBox_Time = new System.Windows.Forms.PictureBox();
             this.Label_Time = new System.Windows.Forms.Label();
+            this.다시시작ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Bomb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Time)).BeginInit();
@@ -50,6 +51,7 @@ namespace MineSweeper
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.끝내기ToolStripMenuItem,
+            this.다시시작ToolStripMenuItem,
             this.난이도ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -129,6 +131,13 @@ namespace MineSweeper
             this.Label_Time.TabIndex = 8;
             this.Label_Time.Text = "label2";
             // 
+            // 다시시작ToolStripMenuItem
+            // 
+            this.다시시작ToolStripMenuItem.Name = "다시시작ToolStripMenuItem";
+            this.다시시작ToolStripMenuItem.Size = new System.Drawing.Size(106, 29);
+            this.다시시작ToolStripMenuItem.Text = "다시 시작";
+            this.다시시작ToolStripMenuItem.Click += new System.EventHandler(this.다시시작ToolStripMenuItem_Click);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -162,5 +171,6 @@ namespace MineSweeper
         private System.Windows.Forms.Label Label_Bomb;
         private System.Windows.Forms.PictureBox PictureBox_Time;
         private System.Windows.Forms.Label Label_Time;
+        private System.Windows.Forms.ToolStripMenuItem 다시시작ToolStripMenuItem;
     }
 }
