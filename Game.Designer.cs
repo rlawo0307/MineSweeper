@@ -31,6 +31,7 @@ namespace MineSweeper
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.끝내기ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.다시시작ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.난이도ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.초급ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.중급ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,7 +40,6 @@ namespace MineSweeper
             this.Label_Bomb = new System.Windows.Forms.Label();
             this.PictureBox_Time = new System.Windows.Forms.PictureBox();
             this.Label_Time = new System.Windows.Forms.Label();
-            this.다시시작ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Bomb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Time)).BeginInit();
@@ -47,7 +47,6 @@ namespace MineSweeper
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.끝내기ToolStripMenuItem,
@@ -55,7 +54,7 @@ namespace MineSweeper
             this.난이도ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1023, 33);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -65,6 +64,13 @@ namespace MineSweeper
             this.끝내기ToolStripMenuItem.Size = new System.Drawing.Size(82, 29);
             this.끝내기ToolStripMenuItem.Text = "끝내기";
             this.끝내기ToolStripMenuItem.Click += new System.EventHandler(this.끝내기ToolStripMenuItem_Click);
+            // 
+            // 다시시작ToolStripMenuItem
+            // 
+            this.다시시작ToolStripMenuItem.Name = "다시시작ToolStripMenuItem";
+            this.다시시작ToolStripMenuItem.Size = new System.Drawing.Size(106, 29);
+            this.다시시작ToolStripMenuItem.Text = "다시 시작";
+            this.다시시작ToolStripMenuItem.Click += new System.EventHandler(this.다시시작ToolStripMenuItem_Click);
             // 
             // 난이도ToolStripMenuItem
             // 
@@ -79,21 +85,21 @@ namespace MineSweeper
             // 초급ToolStripMenuItem
             // 
             this.초급ToolStripMenuItem.Name = "초급ToolStripMenuItem";
-            this.초급ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.초급ToolStripMenuItem.Size = new System.Drawing.Size(150, 34);
             this.초급ToolStripMenuItem.Text = "초급";
             this.초급ToolStripMenuItem.Click += new System.EventHandler(this.초급ToolStripMenuItem_Click);
             // 
             // 중급ToolStripMenuItem
             // 
             this.중급ToolStripMenuItem.Name = "중급ToolStripMenuItem";
-            this.중급ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.중급ToolStripMenuItem.Size = new System.Drawing.Size(150, 34);
             this.중급ToolStripMenuItem.Text = "중급";
             this.중급ToolStripMenuItem.Click += new System.EventHandler(this.중급ToolStripMenuItem_Click);
             // 
             // 고급ToolStripMenuItem
             // 
             this.고급ToolStripMenuItem.Name = "고급ToolStripMenuItem";
-            this.고급ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.고급ToolStripMenuItem.Size = new System.Drawing.Size(150, 34);
             this.고급ToolStripMenuItem.Text = "고급";
             this.고급ToolStripMenuItem.Click += new System.EventHandler(this.고급ToolStripMenuItem_Click);
             // 
@@ -131,18 +137,11 @@ namespace MineSweeper
             this.Label_Time.TabIndex = 8;
             this.Label_Time.Text = "label2";
             // 
-            // 다시시작ToolStripMenuItem
-            // 
-            this.다시시작ToolStripMenuItem.Name = "다시시작ToolStripMenuItem";
-            this.다시시작ToolStripMenuItem.Size = new System.Drawing.Size(106, 29);
-            this.다시시작ToolStripMenuItem.Text = "다시 시작";
-            this.다시시작ToolStripMenuItem.Click += new System.EventHandler(this.다시시작ToolStripMenuItem_Click);
-            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1023, 554);
             this.Controls.Add(this.Label_Time);
             this.Controls.Add(this.PictureBox_Time);
             this.Controls.Add(this.Label_Bomb);

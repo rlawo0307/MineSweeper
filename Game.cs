@@ -24,7 +24,9 @@ namespace MineSweeper
     {
         private int board_x = 10, board_y = 100;
         private int button_width = 30, button_height = 30;
-        private int beginner = 5, intermediate = 10, advanced = 15;
+        private int beginner_col = 8, beginner_row = 10, beginner_bomb = 10;
+        private int intermediate_col = 14, intermediate_row = 18, intermediate_bomb = 40;
+        private int advanced_col = 20, advanced_row = 24, advanced_bomb = 99;
         private Button[,] btn;
         DATA data;
         //private int[,] board;
@@ -48,16 +50,29 @@ namespace MineSweeper
         {
             Init_Data();
             Init_Board();
+            Label_Bomb.Text = data.bomb.ToString();
         }
 
         private void Init_Data()
         {
             if (data.op == 1) // beginner
-                data.col = data.row = beginner;
-            else if (data.op == 2) // intermidiage
-                data.col = data.row = intermediate;
+            {
+                data.col = beginner_col;
+                data.row = beginner_row;
+                data.bomb = beginner_bomb;
+            }
+            else if (data.op == 2) // intermediate
+            {
+                data.col = intermediate_col;
+                data.row = intermediate_row;
+                data.bomb = intermediate_bomb;
+            }
             else // advanced
-                data.col = data.row = advanced;
+            {
+                data.col = advanced_col;
+                data.row = advanced_row;
+                data.bomb = advanced_bomb;
+            }
         }
 
         private void Init_Board()
@@ -70,11 +85,13 @@ namespace MineSweeper
                     }
 
             data.board = new int[data.col, data.row]; // 자동으로 0으로 초기화
+            Rand_Bomb();
             btn = new Button[data.col, data.row] ;
             for (int i = 0; i < data.col; i++)
                 for (int j = 0; j < data.row; j++)
                 {
                     //board[i, j] = i * 10 + j;
+                    
                     btn[i, j] = new Button();
                     btn[i, j].Location = new Point(board_x + j * button_width, board_y + i * button_height);
                     btn[i, j].Width = button_width;
@@ -86,6 +103,11 @@ namespace MineSweeper
                     btn[i, j].MouseUp += btnClick;
                     this.Controls.Add(btn[i, j]);
                 }
+        }
+
+        private void Rand_Bomb()
+        {
+
         }
 
         private void 초급ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,7 +130,7 @@ namespace MineSweeper
 
         private void 다시시작ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Play_Game();
         }
 
         private void 끝내기ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,16 +140,22 @@ namespace MineSweeper
 
         private void btnClick(object sender, EventArgs e)
         {
+            //int flag_r = 0, flag_g = 0, flag_b = 0;
             Button btn = sender as Button;  // 현재 버튼 객체
+            MouseEventArgs E = (MouseEventArgs)e;
 
             //MessageBox.Show("" + btn.Text);
-            if (e.Button == MouseButtons.Left)
+            if (E.Button == MouseButtons.Right)
             {
-
+                data.bomb -= 1;
+                Label_Bomb.Text = data.bomb.ToString();
+                //btn.BackColor = Color.FromArgb(flag_r, flag_g, flag_b);
+                btn.BackgroundImage = Image.FromFile(@"./res/flag.png");
+                btn.BackgroundImageLayout = ImageLayout.Stretch;
             }
-            else if(e.Button == MouseButtons.Right)
+            else if(E.Button == MouseButtons.Left)
             {
-
+                MessageBox.Show("" + btn.Text + "왼쪽클릭");
             }
         }
     }
