@@ -20,13 +20,18 @@ struct DATA
 
 namespace MineSweeper
 {
+    static class Const
+    {
+        public const int board_x = 10, board_y = 100;
+        public const int btn_width = 30, btn_height = 30;
+        public const int beginner_col = 8, beginner_row = 10, beginner_bomb = 10;
+        public const int intermediate_col = 14, intermediate_row = 18, intermediate_bomb = 40;
+        public const int advanced_col = 20, advanced_row = 24, advanced_bomb = 99;
+
+    }
+
     public partial class Game : Form
     {
-        private int board_x = 10, board_y = 100;
-        private int btn_width = 30, btn_height = 30;
-        private int beginner_col = 8, beginner_row = 10, beginner_bomb = 10;
-        private int intermediate_col = 14, intermediate_row = 18, intermediate_bomb = 40;
-        private int advanced_col = 20, advanced_row = 24, advanced_bomb = 99;
         private Button[,] btn;
         DATA data;
 
@@ -55,21 +60,21 @@ namespace MineSweeper
         {
             if (data.op == 1) // beginner
             {
-                data.col = beginner_col;
-                data.row = beginner_row;
-                data.bomb = beginner_bomb;
+                data.col = Const.beginner_col;
+                data.row = Const.beginner_row;
+                data.bomb = Const.beginner_bomb;
             }
             else if (data.op == 2) // intermediate
             {
-                data.col = intermediate_col;
-                data.row = intermediate_row;
-                data.bomb = intermediate_bomb;
+                data.col = Const.intermediate_col;
+                data.row = Const.intermediate_row;
+                data.bomb = Const.intermediate_bomb;
             }
             else // advanced
             {
-                data.col = advanced_col;
-                data.row = advanced_row;
-                data.bomb = advanced_bomb;
+                data.col = Const.advanced_col;
+                data.row = Const.advanced_row;
+                data.bomb = Const.advanced_bomb;
             }
         }
 
@@ -89,9 +94,9 @@ namespace MineSweeper
                 for (int j = 0; j < data.row; j++)
                 {
                     btn[i, j] = new Button();
-                    btn[i, j].Location = new Point(board_x + j * btn_width, board_y + i * btn_height);
-                    btn[i, j].Width = btn_width;
-                    btn[i, j].Height = btn_height;
+                    btn[i, j].Location = new Point(Const.board_x + j * Const.btn_width, Const.board_y + i * Const.btn_height);
+                    btn[i, j].Width = Const.btn_width;
+                    btn[i, j].Height = Const.btn_height;
                     btn[i, j].BackColor = System.Drawing.Color.Green;
                     btn[i, j].FlatStyle = FlatStyle.Flat;
                     btn[i, j].FlatAppearance.BorderSize = 0;
@@ -183,8 +188,8 @@ namespace MineSweeper
             }
             else if(E.Button == MouseButtons.Left)
             {
-                int i = (btn.Location.Y - board_y) / btn_height;
-                int j = (btn.Location.X - board_x) / btn_width;
+                int i = (btn.Location.Y - Const.board_y) / Const.btn_height;
+                int j = (btn.Location.X - Const.board_x) / Const.btn_width;
 
                 if (data.board[i,j] == -1)
                 {
@@ -192,13 +197,34 @@ namespace MineSweeper
                 }
                 else if (data.board[i, j] == 0)
                 {
-                    MessageBox.Show("0");
+                    Find_Zero(this.btn, i, j);
                 }
                 else
                 {
                     btn.BackColor = Color.FromArgb(255, 255, 255);
                     btn.Text = data.board[i, j].ToString();
                 }
+            }
+        }
+
+        private void Find_Zero(Button[,] btn, int i, int j)
+        {
+            if (i < 0 || i >= data.col || j < 0 || j >= data.row)
+                return;
+            if (btn[i, j].BackColor == Color.FromArgb(255, 255, 255))
+                return;
+
+            btn[i, j].BackColor = Color.FromArgb(255, 255, 255);
+            if (data.board[i, j] != 0)
+                btn[i, j].Text = data.board[i, j].ToString();
+
+            if( data.board[i, j] != 0)
+                return;
+            else
+            {
+                for(int k=i-1; k<=i+1; k++)
+                    for(int l=j-1; l<=j+1; l++)
+                        Find_Zero(btn, k, l);
             }
         }
     }

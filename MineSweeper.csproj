@@ -52,9 +52,7 @@
     <Compile Include="Start_Screen.Designer.cs">
       <DependentUpon>Start_Screen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="Game.Designer.cs">
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
