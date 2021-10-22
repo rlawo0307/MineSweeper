@@ -14,6 +14,7 @@ struct DATA
     public int op; // 1-beginner, 2-intermidiate, 3-advanced
     public int col;
     public int row;
+    public int flag;
     public int bomb;
     public int btn_width;
     public int btn_height;
@@ -77,7 +78,7 @@ namespace MineSweeper
             panel_height = Const.board_y * 2 + data.col * data.btn_height;
             this.Size = new Size(panel_width, panel_height);
 
-            Label_Bomb.Text = data.bomb.ToString();
+            Label_Bomb.Text = data.flag.ToString();
         }
 
         private void Init_Data()
@@ -86,19 +87,19 @@ namespace MineSweeper
             {
                 data.col = Const.beginner_col;
                 data.row = Const.beginner_row;
-                data.bomb = Const.beginner_bomb;
+                data.bomb = data.flag = Const.beginner_bomb;
             }
             else if (data.op == 2) // intermediate
             {
                 data.col = Const.intermediate_col;
                 data.row = Const.intermediate_row;
-                data.bomb = Const.intermediate_bomb;
+                data.bomb = data.flag = Const.intermediate_bomb;
             }
             else // advanced
             {
                 data.col = Const.advanced_col;
                 data.row = Const.advanced_row;
-                data.bomb = Const.advanced_bomb;
+                data.bomb = data.flag = Const.advanced_bomb;
             }
             data.btn_width = Const.btn_width;
             data.btn_height = Const.btn_height;
@@ -188,44 +189,52 @@ namespace MineSweeper
             Button btn = sender as Button;  // 현재 버튼 객체
             MouseEventArgs E = (MouseEventArgs)e;
 
+            int i = (btn.Location.Y - Const.board_y) / data.btn_height;
+            int j = (btn.Location.X - Const.board_x) / data.btn_width;
+
             if (E.Button == MouseButtons.Right)
             {
-                if (data.bomb > 0)
+                if(btn.BackgroundImage == null)
                 {
-                    if (btn.BackgroundImage != null)
+                    if (btn.BackColor == c_default)
                     {
-                        btn.BackgroundImage = null;
-                        btn.BackColor = c_default;
+                        btn.BackgroundImage = Image.FromFile(Const.flag_path);
+                        btn.BackgroundImageLayout = ImageLayout.Stretch;
+                        data.flag -= 1;
+                        Label_Bomb.Text = data.flag.ToString();
+                        if (data.board[i, j] == -1)
+                            data.bomb--;
                     }
+                }
+                else
+                {
+                    btn.BackgroundImage = null;
+                    btn.BackColor = c_default;
+                    data.flag++;
+                    Label_Bomb.Text = data.flag.ToString();
+                }
+
+                if (data.bomb == 0 && data.flag == 0)
+                {
+                    stopwatch.Stop();
+                    if (MessageBox.Show("Time : " + stopwatch.Elapsed + "\n" + Const.str_replay, "Success!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        Play_Game();
                     else
-                    {
-                        if (btn.BackColor == c_default)
-                        {
-                            btn.BackgroundImage = Image.FromFile(Const.flag_path);
-                            btn.BackgroundImageLayout = ImageLayout.Stretch;
-                            data.bomb -= 1;
-                            Label_Bomb.Text = data.bomb.ToString();
-                        }
-                    }
-
-                    if (data.bomb == 0)
-                    {
-                        stopwatch.Stop();
-                        if (MessageBox.Show("Time : " + stopwatch.Elapsed + "\n" + Const.str_replay, "Success!", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                            Play_Game();
-                        else
-                            this.Close();
-                    }
-
+                        this.Close();
                 }
             }
             else if(E.Button == MouseButtons.Left)
             {
-                int i = (btn.Location.Y - Const.board_y) / data.btn_height;
-                int j = (btn.Location.X - Const.board_x) / data.btn_width;
-
                 if (data.board[i,j] == -1)
                 {
+                    for(int k=0; k<data.col; k++)
+                        for(int l=0; l<data.row; l++)
+                            if(data.board[k,l] == -1)
+                            {
+                                this.btn[k,l].BackgroundImage = Image.FromFile(Const.bomb_path);
+                                this.btn[k,l].BackgroundImageLayout = ImageLayout.Stretch;
+                            }
+                    
                     if (MessageBox.Show(Const.str_replay, "Game Over!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         Play_Game();
                     else
