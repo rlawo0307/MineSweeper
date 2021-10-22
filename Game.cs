@@ -28,20 +28,27 @@ namespace MineSweeper
         public const int intermediate_col = 14, intermediate_row = 18, intermediate_bomb = 40;
         public const int advanced_col = 20, advanced_row = 24, advanced_bomb = 99;
 
+        public const string bomb_path = @"./res/bomb.png";
+        public const string time_path = @"./res/time.png";
+        public const string flag_path = @"./res/flag.png";
+        public const string str_replay = "RePlay?";
     }
 
     public partial class Game : Form
     {
-        private Button[,] btn;
+        readonly Color c_default = System.Drawing.Color.Green;
+        readonly Color c_num = System.Drawing.Color.FromArgb(255, 255, 150);
+
+        Button[,] btn;
         DATA data;
 
         public Game()
         {
             InitializeComponent();
 
-            PictureBox_Bomb.Load(@"./res/bomb.png");
+            PictureBox_Bomb.Load(Const.bomb_path);
             PictureBox_Bomb.SizeMode = PictureBoxSizeMode.StretchImage;
-            PictureBox_Time.Load(@"./res/time.png");
+            PictureBox_Time.Load(Const.time_path);
             PictureBox_Time.SizeMode = PictureBoxSizeMode.StretchImage;
 
             data = new DATA();
@@ -97,7 +104,7 @@ namespace MineSweeper
                     btn[i, j].Location = new Point(Const.board_x + j * Const.btn_width, Const.board_y + i * Const.btn_height);
                     btn[i, j].Width = Const.btn_width;
                     btn[i, j].Height = Const.btn_height;
-                    btn[i, j].BackColor = System.Drawing.Color.Green;
+                    btn[i, j].BackColor = c_default;
                     btn[i, j].FlatStyle = FlatStyle.Flat;
                     btn[i, j].FlatAppearance.BorderSize = 0;
                     btn[i, j].MouseUp += btnClick;
@@ -169,13 +176,13 @@ namespace MineSweeper
                     if (btn.BackgroundImage != null)
                     {
                         btn.BackgroundImage = null;
-                        btn.BackColor = System.Drawing.Color.Green;
+                        btn.BackColor = c_default;
                     }
                     else
                     {
-                        if (btn.BackColor == System.Drawing.Color.Green)
+                        if (btn.BackColor == c_default)
                         {
-                            btn.BackgroundImage = Image.FromFile(@"./res/flag.png");
+                            btn.BackgroundImage = Image.FromFile(Const.flag_path);
                             btn.BackgroundImageLayout = ImageLayout.Stretch;
                             data.bomb -= 1;
                             Label_Bomb.Text = data.bomb.ToString();
@@ -183,7 +190,13 @@ namespace MineSweeper
                     }
 
                     if (data.bomb == 0)
-                        MessageBox.Show("Complete!");
+                    {
+                        if (MessageBox.Show("Time : " + data.time + "\n" + Const.str_replay, "Success!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            Play_Game();
+                        else
+                            this.Close();
+                    }
+
                 }
             }
             else if(E.Button == MouseButtons.Left)
@@ -193,7 +206,10 @@ namespace MineSweeper
 
                 if (data.board[i,j] == -1)
                 {
-                    MessageBox.Show("Game Over!");
+                    if (MessageBox.Show(Const.str_replay, "Game Over!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        Play_Game();
+                    else
+                        this.Close();
                 }
                 else if (data.board[i, j] == 0)
                 {
@@ -201,7 +217,7 @@ namespace MineSweeper
                 }
                 else
                 {
-                    btn.BackColor = Color.FromArgb(255, 255, 255);
+                    btn.BackColor = c_num;
                     btn.Text = data.board[i, j].ToString();
                 }
             }
@@ -211,10 +227,10 @@ namespace MineSweeper
         {
             if (i < 0 || i >= data.col || j < 0 || j >= data.row)
                 return;
-            if (btn[i, j].BackColor == Color.FromArgb(255, 255, 255))
+            if (btn[i, j].BackColor == c_num)
                 return;
 
-            btn[i, j].BackColor = Color.FromArgb(255, 255, 255);
+            btn[i, j].BackColor = c_num;
             if (data.board[i, j] != 0)
                 btn[i, j].Text = data.board[i, j].ToString();
 
@@ -228,6 +244,5 @@ namespace MineSweeper
             }
         }
     }
-
 }
 
