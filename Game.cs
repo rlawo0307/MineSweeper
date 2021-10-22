@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 struct DATA
 {
@@ -14,7 +15,6 @@ struct DATA
     public int col;
     public int row;
     public int bomb;
-    public int time;
     public int[,] board;
 }
 
@@ -38,9 +38,11 @@ namespace MineSweeper
     {
         readonly Color c_default = System.Drawing.Color.Green;
         readonly Color c_num = System.Drawing.Color.FromArgb(255, 255, 150);
+        //private static readonly double cycleTime = 1000; // 1초
 
         Button[,] btn;
         DATA data;
+        Stopwatch stopwatch = new Stopwatch();
 
         public Game()
         {
@@ -48,19 +50,20 @@ namespace MineSweeper
 
             PictureBox_Bomb.Load(Const.bomb_path);
             PictureBox_Bomb.SizeMode = PictureBoxSizeMode.StretchImage;
-            PictureBox_Time.Load(Const.time_path);
-            PictureBox_Time.SizeMode = PictureBoxSizeMode.StretchImage;
+            //PictureBox_Time.Load(Const.time_path);
+            //PictureBox_Time.SizeMode = PictureBoxSizeMode.StretchImage;
 
             data = new DATA();
             data.op = 1;
+            stopwatch.Start();
             Play_Game();
         }
-
         private void Play_Game()
         {
             Init_Data();
             Init_Board();
             Label_Bomb.Text = data.bomb.ToString();
+            this.Size = new Size((data.col+3) * Const.btn_width, (data.row+3) * Const.btn_height);
         }
 
         private void Init_Data()
@@ -191,7 +194,8 @@ namespace MineSweeper
 
                     if (data.bomb == 0)
                     {
-                        if (MessageBox.Show("Time : " + data.time + "\n" + Const.str_replay, "Success!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        stopwatch.Stop();
+                        if (MessageBox.Show("Time : " + stopwatch.Elapsed + "\n" + Const.str_replay, "Success!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             Play_Game();
                         else
                             this.Close();
