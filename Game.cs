@@ -181,7 +181,7 @@ namespace MineSweeper
 
         private void 끝내기ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnClick(object sender, EventArgs e)

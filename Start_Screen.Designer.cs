@@ -31,11 +31,12 @@ namespace MineSweeper
         {
             this.Button_Play = new System.Windows.Forms.Button();
             this.button_Exit = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Button_Play
             // 
-            this.Button_Play.Location = new System.Drawing.Point(129, 307);
+            this.Button_Play.Location = new System.Drawing.Point(216, 307);
             this.Button_Play.Name = "Button_Play";
             this.Button_Play.Size = new System.Drawing.Size(155, 67);
             this.Button_Play.TabIndex = 1;
@@ -45,7 +46,7 @@ namespace MineSweeper
             // 
             // button_Exit
             // 
-            this.button_Exit.Location = new System.Drawing.Point(327, 307);
+            this.button_Exit.Location = new System.Drawing.Point(416, 307);
             this.button_Exit.Name = "button_Exit";
             this.button_Exit.Size = new System.Drawing.Size(155, 67);
             this.button_Exit.TabIndex = 2;
@@ -53,22 +54,39 @@ namespace MineSweeper
             this.button_Exit.UseVisualStyleBackColor = true;
             this.button_Exit.Click += new System.EventHandler(this.button_Exit_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Enabled = false;
+            this.textBox1.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.textBox1.Location = new System.Drawing.Point(216, 87);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(355, 54);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "\r\n\r\nMine Sweeper\r\n\r\n";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ControlBox = false;
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.Button_Play);
             this.Name = "Main_Form";
             this.Text = "지뢰 찾기";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Button Button_Play;
         private System.Windows.Forms.Button button_Exit;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

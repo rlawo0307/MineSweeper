@@ -15,6 +15,8 @@ namespace MineSweeper
         public Main_Form()
         {
             InitializeComponent();
+
+            textBox1.Size = new Size(210, 100);
         }
 
         private void Button_Play_Click(object sender, EventArgs e)
