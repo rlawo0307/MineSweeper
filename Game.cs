@@ -15,6 +15,8 @@ struct DATA
     public int col;
     public int row;
     public int bomb;
+    public int btn_width;
+    public int btn_height;
     public int[,] board;
 }
 
@@ -22,11 +24,12 @@ namespace MineSweeper
 {
     static class Const
     {
+        public const int max_board_width = 540, max_board_height = 420;
         public const int board_x = 10, board_y = 100;
         public const int btn_width = 30, btn_height = 30;
         public const int beginner_col = 8, beginner_row = 10, beginner_bomb = 10;
         public const int intermediate_col = 14, intermediate_row = 18, intermediate_bomb = 40;
-        public const int advanced_col = 20, advanced_row = 24, advanced_bomb = 99;
+        public const int advanced_col = 20, advanced_row = 24, advanced_bomb = 100;
 
         public const string bomb_path = @"./res/bomb.png";
         public const string time_path = @"./res/time.png";
@@ -38,7 +41,6 @@ namespace MineSweeper
     {
         readonly Color c_default = System.Drawing.Color.Green;
         readonly Color c_num = System.Drawing.Color.FromArgb(255, 255, 150);
-        //private static readonly double cycleTime = 1000; // 1초
 
         Button[,] btn;
         DATA data;
@@ -60,10 +62,22 @@ namespace MineSweeper
         }
         private void Play_Game()
         {
+            int panel_width, panel_height;
+
             Init_Data();
+
+            if (Const.max_board_width < data.row * data.btn_width)
+                data.btn_width = (int)(Const.max_board_width / data.row);
+            if (Const.max_board_height < data.col * data.btn_height)
+                data.btn_height = (int)(Const.max_board_height / data.col);
+
             Init_Board();
+
+            panel_width = Const.board_x * 3 + data.row * data.btn_width;
+            panel_height = Const.board_y * 2 + data.col * data.btn_height;
+            this.Size = new Size(panel_width, panel_height);
+
             Label_Bomb.Text = data.bomb.ToString();
-            this.Size = new Size((data.col+3) * Const.btn_width, (data.row+3) * Const.btn_height);
         }
 
         private void Init_Data()
@@ -86,6 +100,8 @@ namespace MineSweeper
                 data.row = Const.advanced_row;
                 data.bomb = Const.advanced_bomb;
             }
+            data.btn_width = Const.btn_width;
+            data.btn_height = Const.btn_height;
         }
 
         private void Init_Board()
@@ -104,9 +120,9 @@ namespace MineSweeper
                 for (int j = 0; j < data.row; j++)
                 {
                     btn[i, j] = new Button();
-                    btn[i, j].Location = new Point(Const.board_x + j * Const.btn_width, Const.board_y + i * Const.btn_height);
-                    btn[i, j].Width = Const.btn_width;
-                    btn[i, j].Height = Const.btn_height;
+                    btn[i, j].Location = new Point(Const.board_x + j * data.btn_width, Const.board_y + i * data.btn_height);
+                    btn[i, j].Width = data.btn_width;
+                    btn[i, j].Height = data.btn_height;
                     btn[i, j].BackColor = c_default;
                     btn[i, j].FlatStyle = FlatStyle.Flat;
                     btn[i, j].FlatAppearance.BorderSize = 0;
@@ -205,8 +221,8 @@ namespace MineSweeper
             }
             else if(E.Button == MouseButtons.Left)
             {
-                int i = (btn.Location.Y - Const.board_y) / Const.btn_height;
-                int j = (btn.Location.X - Const.board_x) / Const.btn_width;
+                int i = (btn.Location.Y - Const.board_y) / data.btn_height;
+                int j = (btn.Location.X - Const.board_x) / data.btn_width;
 
                 if (data.board[i,j] == -1)
                 {
